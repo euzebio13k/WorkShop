@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  FlatList,
 } from 'react-native';
 
 import {TitleEvent} from './src/components/TitleEvent';
@@ -81,13 +82,18 @@ export default function App() {
       </Text>
 
       {members.length > 0 ? (
-        members.map((name, index) => (
-          <Member
-            id={name + index}
-            name={name}
-            onRemove={() => handleRemoveMember(name)}
-          />
-        ))
+        <FlatList
+          data={members}
+          keyExtractor={item => item}
+          renderItem={({index, item}) =>(
+            <Member
+              id={item + index}
+              name={item}
+              onRemove={() => handleRemoveMember(item)}
+            />
+          )
+        } 
+        />
       ) : (
         <Text key={4} style={styled.paragraph}>
           Ninguém chegou no evento ainda? Adicione participantes a sua lista de
